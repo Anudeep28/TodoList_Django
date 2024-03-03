@@ -1,7 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from todo_app.models import TaskModel
 
 
 def home(request):
-    return render(request, 'home.html' )
+    tasks = TaskModel.objects.filter(is_completed=False).order_by('-updated_at')
+    context={
+        'tasks':tasks
+        }
+    return render(request, 'home.html',context)
